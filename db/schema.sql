@@ -8,6 +8,6 @@ USE EatDaBurger_db;
      id INT NOT NULL AUTO_INCREMENT,
      burger_name VARCHAR(50),
      devoured BOOLEAN,
-     createdAt TIMESTAMP NOT NULL
+     createdAt TIMESTAMP NOT NULL,
      PRIMARY KEY (id)
  );

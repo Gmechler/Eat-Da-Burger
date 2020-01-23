@@ -10,7 +10,7 @@ function printQuestionMarks(num) {
   return arr.toString();
 }
 
-function objToSQL(ob) {
+function objToSql(ob) {
   var arr = [];
   for (var key in ob) {
     var value = ob[key];
@@ -39,24 +39,26 @@ var orm = {
     queryString += " (";
     queryString += cols.toString();
     queryString += ") ";
-    queryString += " VALUES (";
+    queryString += "VALUES (";
     queryString += printQuestionMarks(vals.length);
     queryString += ") ";
 
     console.log(queryString);
+
     connection.query(queryString, vals, function(err, result) {
       if (err) {
         throw err;
       }
+
       cb(result);
     });
   },
-  updateOne: function(table, objColVals, condition, cd) {
+  updateOne: function(table, objColVals, condition, cb) {
     var queryString = "UPDATE " + table;
 
-    queryString += "SET ";
-    queryString += objToSQL(objColVals);
-    queryString += " WHERE";
+    queryString += " SET ";
+    queryString += objToSql(objColVals);
+    queryString += " WHERE ";
     queryString += condition;
 
     console.log(queryString);
@@ -64,19 +66,21 @@ var orm = {
       if (err) {
         throw err;
       }
-      cd(result);
+
+      cb(result);
     });
   },
 
   deleteOne: function(table, condition, cb) {
     var queryString = "DELETE FROM " + table;
-    queryString += " WHERE";
+    queryString += " WHERE ";
     queryString += condition;
 
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
       }
+
       cb(result);
     });
   }
